@@ -52,23 +52,23 @@ inline fun <reified T : Any> descriptor(): String = descriptor(T::class.javaObje
 
 inline fun InputStream.copy(destination: Path, vararg options: CopyOption): Long = Files.copy(this, destination, *options)
 
-inline fun Char.repeat(count: Int): String = string.repeat(count)
+inline fun Char.repeat(count: Int): String = this.string.repeat(count)
 
 inline fun <T, R> T.runIf(condition: Boolean, function: T.() -> R): R? = when {
-    condition -> function()
+    condition -> this.function()
     else -> null
 }
 
-inline fun <T> T.applyIf(condition: Boolean, action: T.() -> Unit): T = apply {runIf(condition, action)}
-inline fun <T, R> T.letIf(condition: Boolean, transformation: (T) -> R): R? = runIf(condition, transformation)
-inline fun <T> T.mapIf(condition: Boolean, transformation: (T) -> T): T = runIf(condition, transformation) ?: this
-inline fun <T> T.alsoIf(condition: Boolean, action: (T) -> Unit): T = applyIf(condition, action)
+inline fun <T> T.applyIf(condition: Boolean, action: T.() -> Unit): T = this.apply {this.runIf(condition, action)}
+inline fun <T, R> T.letIf(condition: Boolean, transformation: (T) -> R): R? = this.runIf(condition, transformation)
+inline fun <T> T.mapIf(condition: Boolean, transformation: (T) -> T): T = this.runIf(condition, transformation) ?: this
+inline fun <T> T.alsoIf(condition: Boolean, action: (T) -> Unit): T = this.applyIf(condition, action)
 
 @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION")
-inline fun Boolean?.then(action: () -> Unit): Boolean? = also {
-    if (this == true) {
-        action()
-    }
+inline fun Boolean?.then(action: () -> Unit): Boolean? = this.also {
+	if (this == true) {
+		action()
+	}
 }
 
 @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION")
@@ -89,45 +89,45 @@ inline fun <K, V> Map<K, V>.asMutable(): MutableMap<K, V> = this as MutableMap<K
 inline fun <T> Array<T>.listIterator(): ArrayIterator<T> = ArrayIterator(this)
 inline fun CharSequence.listIterator(): ListIterator<Char> = StringIterator(this)
 
-inline fun <T> Iterable<T>.each(action: (T) -> Unit) = forEach(action)
-inline fun <T> Iterable<T>.withEach(action: T.() -> Unit) = forEach(action)
-inline fun <T> Iterator<T>.each(action: (T) -> Unit) = forEach(action)
-inline fun <T> Iterator<T>.withEach(action: T.() -> Unit) = forEach(action)
-inline fun <T> Array<T>.each(action: (T) -> Unit) = forEach(action)
-inline fun <T> Array<T>.withEach(action: T.() -> Unit) = forEach(action)
-inline fun <T> Stream<T>.each(noinline action: (T) -> Unit) = forEach(action)
-inline fun <T> Stream<T>.withEach(noinline action: T.() -> Unit) = forEach(action)
-inline fun <K, V> Map<K, V>.each(action: (Map.Entry<K, V>) -> Unit) = forEach(action)
-inline fun <K, V> Map<K, V>.each(action: (K, V) -> Unit) = forEach {entry -> action(entry.key, entry.value)}
-inline fun <K, V> Map<K, V>.withEach(action: Map.Entry<K, V>.() -> Unit) = forEach(action)
+inline fun <T> Iterable<T>.each(action: (T) -> Unit) = this.forEach(action)
+inline fun <T> Iterable<T>.withEach(action: T.() -> Unit) = this.forEach(action)
+inline fun <T> Iterator<T>.each(action: (T) -> Unit) = this.forEach(action)
+inline fun <T> Iterator<T>.withEach(action: T.() -> Unit) = this.forEach(action)
+inline fun <T> Array<T>.each(action: (T) -> Unit) = this.forEach(action)
+inline fun <T> Array<T>.withEach(action: T.() -> Unit) = this.forEach(action)
+inline fun <T> Stream<T>.each(noinline action: (T) -> Unit) = this.forEach(action)
+inline fun <T> Stream<T>.withEach(noinline action: T.() -> Unit) = this.forEach(action)
+inline fun <K, V> Map<K, V>.each(action: (Map.Entry<K, V>) -> Unit) = this.forEach(action)
+inline fun <K, V> Map<K, V>.each(action: (K, V) -> Unit) = this.forEach {entry -> action(entry.key, entry.value)}
+inline fun <K, V> Map<K, V>.withEach(action: Map.Entry<K, V>.() -> Unit) = this.forEach(action)
 
 inline fun <T> Iterator<T>.find(predicate: (T) -> Boolean): T? = null.also {
-    each {
-        if (predicate(it)) {
-            return it
-        }
-    }
+	this.each {
+		if (predicate(it)) {
+			return it
+		}
+	}
 }
 
 inline fun <T, O : T> Iterator<T>.find(predicate: (T) -> Boolean, action: (O) -> Unit): O? = null.also {
-    each {
-        if (predicate(it)) {
-            return (it as O).also(action)
-        }
-    }
+	this.each {
+		if (predicate(it)) {
+			return (it as O).also(action)
+		}
+	}
 }
 
 inline fun <T, M : MutableMap<T, T?>> Iterator<T>.toMap(map: M): M = map.also {
-    each {
-        map[it] = when {
-            hasNext() -> next()
-            else -> null
-        }
-    }
+	this.each {
+		map[it] = when {
+			this.hasNext() -> this.next()
+			else -> null
+		}
+	}
 }
 
-inline fun <T> Iterator<T>.toMap(): HashMap<T, T?> = toMap(HashMap<T, T?>())
-inline fun <T, M : MutableMap<T, T?>> Iterable<T>.toMap(map: M): M = iterator().toMap(map)
-inline fun <T> Iterable<T>.toMap(): HashMap<T, T?> = iterator().toMap()
+inline fun <T> Iterator<T>.toMap(): HashMap<T, T?> = this.toMap(HashMap<T, T?>())
+inline fun <T, M : MutableMap<T, T?>> Iterable<T>.toMap(map: M): M = this.iterator().toMap(map)
+inline fun <T> Iterable<T>.toMap(): HashMap<T, T?> = this.iterator().toMap()
 
 inline fun <T> MutableCollection<T>.add(vararg values: T) = values.each {this.add(it)}

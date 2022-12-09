@@ -1,13 +1,12 @@
 
-import net.auoeke.extensions.*
-import org.junit.jupiter.api.*
-import org.junit.platform.commons.annotation.*
-import kotlin.io.println
+import net.auoeke.extensions.source
+import net.auoeke.extensions.type
+import org.junit.jupiter.api.Test
+import org.junit.platform.commons.annotation.Testable
 
 @Testable
 class Tests {
-    @Test
-    fun test() {
-        println(type.source!!.resolve("META-INF/MANIFEST.MF"))
+    @Test fun test() {
+        println(this.type.source!!.resolve("META-INF/MANIFEST.MF"))
     }
 }

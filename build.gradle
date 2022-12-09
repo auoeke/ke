@@ -1,0 +1,62 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("maven-publish")
+	id("org.jetbrains.kotlin.jvm").version("latest.release")
+	id("net.auoeke.gronk").version("3.+")
+}
+
+allprojects {
+    plugins.tap {
+        apply("maven-publish")
+        apply("org.jetbrains.kotlin.jvm")
+	    apply("net.auoeke.gronk")
+    }
+
+	javaVersion(17)
+	extensions.add("isModule", projectDir.relativePath(rootProject.rootDir).startsWith("modules"))
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    }
+
+	tasks.withType(KotlinCompile) {
+		kotlinOptions.jvmTarget = targetCompatibility
+	}
+
+    tasks.test {
+        useJUnitPlatform()
+    }
+
+	if (isModule) {
+		tasks.withType(Jar) {
+			archiveBaseName.set("extensions-${project.name}")
+		}
+	}
+
+    publishing {
+        repositories {
+            maven(findProperty("maven.repository")) {
+                username(findProperty("maven.username"))
+                password(findProperty("maven.password"))
+            }
+        }
+    }
+}
+
+subprojects {
+    dependencies {
+        api(rootProject)
+    }
+}
+
+new Properties().tap {load(new FileInputStream("dependencies.properties"))}.each {key, value ->
+    project(key).dependencies {
+        compileOnly(value.split(" "))
+    }
+}
