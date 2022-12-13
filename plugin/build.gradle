@@ -10,8 +10,8 @@ jar {
 gradlePlugin {
     plugins {
         extensions {
-            id = "net.auoeke.extensions"
-            implementationClass = "net.auoeke.extensions.plugin.ExtensionsPlugin"
+            id = group
+            implementationClass = group + ".plugin.ExtensionsPlugin"
         }
     }
 }
