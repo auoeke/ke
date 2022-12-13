@@ -11,6 +11,8 @@ gradlePlugin {
     plugins {
         extensions {
             id = group
+            displayName = rootProject.name
+            description = project.description
             implementationClass = group + ".plugin.ExtensionsPlugin"
         }
     }

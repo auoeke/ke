@@ -8,11 +8,13 @@ plugins {
 
 allprojects {
     plugins.tap {
+	    apply("signing")
         apply("maven-publish")
         apply("org.jetbrains.kotlin.jvm")
 	    apply("net.auoeke.gronk")
     }
 
+	description = "Kotlin extensions"
 	javaVersion(17)
 	extensions.add("isModule", projectDir.relativePath(rootProject.rootDir).startsWith("modules"))
 
@@ -33,6 +35,10 @@ allprojects {
         useJUnitPlatform()
     }
 
+	java {
+		withJavadocJar()
+	}
+
 	if (isModule) {
 		tasks.withType(Jar) {
 			archiveBaseName.set("extensions-${project.name}")
@@ -46,6 +52,28 @@ allprojects {
                 password(findProperty("maven.password"))
             }
         }
+
+	    publications.withType(MavenPublication) {
+		    pom {
+			    url = "https://github.com/auoeke/ke"
+			    
+			    licenses {
+				    license {
+					    url = "https://github.com/auoeke/ke/blob/master/LICENSE.md"
+				    }
+			    }
+
+			    developers {
+				    developer {
+					    email = "me@auoeke.net"
+				    }
+			    }
+
+			    scm {
+				    url = "https://github.com/auoeke/ke"
+			    }
+		    }
+	    }
     }
 }
 
