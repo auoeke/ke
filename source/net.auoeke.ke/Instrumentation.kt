@@ -2,8 +2,8 @@
 
 package net.auoeke.ke
 
-import java.lang.instrument.*
-import java.security.*
+import java.lang.instrument.Instrumentation
+import java.security.ProtectionDomain
 
 inline fun Instrumentation.transform(transformer: ClassTransformer) = this.addTransformer(transformer)
 

@@ -2,9 +2,10 @@
 
 package net.auoeke.ke
 
-import java.io.*
-import java.net.*
-import java.nio.file.*
+import java.io.File
+import java.net.URI
+import java.net.URL
+import java.nio.file.Path
 
 inline val File.exists: Boolean get() = this.exists()
 inline val File.asPath: Path get() = this.toPath()

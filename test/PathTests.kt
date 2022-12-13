@@ -1,4 +1,4 @@
-import org.junit.platform.commons.annotation.*
+import org.junit.platform.commons.annotation.Testable
 
 @Testable
 class PathTests {

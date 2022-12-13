@@ -2,8 +2,8 @@
 
 package net.auoeke.ke
 
-import java.io.*
-import java.nio.file.*
+import java.io.InputStream
+import java.nio.file.Path
 
 inline fun ClassLoader.resource(name: String): Path? = this.getResource(name)?.asPath
 inline fun ClassLoader.resourceStream(name: String): InputStream? = this.getResourceAsStream(name)

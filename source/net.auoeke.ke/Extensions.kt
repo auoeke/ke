@@ -13,35 +13,35 @@ inline fun property(name: String): String? = System.getProperty(name)
 inline fun time(action: () -> Unit): Long = measureNanoTime(action)
 
 inline fun <T> time(action: () -> T, finally: (Long) -> Unit): T {
-    val start = System.nanoTime()
+	val start = System.nanoTime()
 
-    try {
-        return action()
-    } finally {
-        finally(System.nanoTime() - start)
-    }
+	try {
+		return action()
+	} finally {
+		finally(System.nanoTime() - start)
+	}
 }
 
 fun internalName(type: Any): String = when (type) {
-    is Class<*> -> when {
-        type.isArray -> '[' + internalName(type.componentType)
-        else -> type.descriptorString().removeSurrounding("L", ";")
-    }
-    is KClass<*> -> internalName(type.java)
-    else -> when (type) {
-        is String -> type
-        else -> type.string
-    }.replace('.', '/')
+	is Class<*> -> when {
+		type.isArray -> '[' + internalName(type.componentType)
+		else -> type.descriptorString().removeSurrounding("L", ";")
+	}
+	is KClass<*> -> internalName(type.java)
+	else -> when (type) {
+		is String -> type
+		else -> type.string
+	}.replace('.', '/')
 }
 
 fun descriptor(type: Any): String = when (type) {
-    is Class<*> -> type.descriptorString()
-    is KClass<*> -> type.java.descriptorString()
-    is Char -> type.string
-    else -> 'L' + when (type) {
-        is String -> type
-        else -> type.string
-    }.replace('.', '/') + ';'
+	is Class<*> -> type.descriptorString()
+	is KClass<*> -> type.java.descriptorString()
+	is Char -> type.string
+	else -> 'L' + when (type) {
+		is String -> type
+		else -> type.string
+	}.replace('.', '/') + ';'
 }
 
 fun methodDescriptor(returnType: Any, vararg parameterTypes: Any): String = "(${parameterTypes.joinToString("") {descriptor(it)}})${descriptor(returnType)}"
@@ -55,8 +55,8 @@ inline fun InputStream.copy(destination: Path, vararg options: CopyOption): Long
 inline fun Char.repeat(count: Int): String = this.string.repeat(count)
 
 inline fun <T, R> T.runIf(condition: Boolean, function: T.() -> R): R? = when {
-    condition -> this.function()
-    else -> null
+	condition -> this.function()
+	else -> null
 }
 
 inline fun <T> T.applyIf(condition: Boolean, action: T.() -> Unit): T = this.apply {this.runIf(condition, action)}
@@ -73,8 +73,8 @@ inline fun Boolean?.then(action: () -> Unit): Boolean? = this.also {
 
 @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION")
 inline fun <T> Boolean?.thenLet(action: () -> T): T? = when (this) {
-    true -> action()
-    else -> null
+	true -> action()
+	else -> null
 }
 
 inline fun <E> Iterator<E>.asMutable(): MutableIterator<E> = this as MutableIterator<E>

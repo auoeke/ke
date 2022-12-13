@@ -2,13 +2,13 @@
 
 package net.auoeke.ke
 
-import java.io.*
-import java.nio.file.*
-import java.security.*
+import java.io.InputStream
+import java.nio.file.Path
+import java.security.CodeSource
 import java.util.*
-import java.util.jar.*
-import kotlin.io.path.*
-import kotlin.reflect.*
+import java.util.jar.Manifest
+import kotlin.io.path.inputStream
+import kotlin.reflect.KClass
 
 inline val Class<*>.loader: ClassLoader? get() = this.classLoader
 inline val Class<*>.hierarchy: List<Class<*>> get() = this.hierarchy(null)
@@ -23,11 +23,11 @@ inline fun Class<*>.localResource(name: String): Path? = this.path?.resolve(name
 inline fun Class<*>.properties(name: String): Properties = Properties(this.resource(name)!!)
 
 fun Class<*>.hierarchy(limit: Class<*>?): List<Class<*>> = ArrayList<Class<*>>().also {
-    var type: Class<*>? = this
+	var type: Class<*>? = this
 
-    while (type !== limit) {
-        it += type!!.apply {type = this.superclass}
-    }
+	while (type !== limit) {
+		it += type!!.apply {type = this.superclass}
+	}
 }
 
 fun Class<*>.hierarchy(excludeObject: Boolean) = this.hierarchy(when {

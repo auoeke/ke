@@ -2,7 +2,8 @@
 
 package net.auoeke.ke
 
-import java.util.jar.*
+import java.util.jar.Attributes
+import java.util.jar.Manifest
 
 inline val Manifest.specificationVersion: String? get() = this.mainAttributes("Specification-Version")
 inline val Manifest.implementationVersion: String? get() = this.mainAttributes("Implementation-Version")

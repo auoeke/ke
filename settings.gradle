@@ -1,6 +1,6 @@
 void module(String name) {
-    include(name)
-    project(":$name").projectDir = file("modules/$name")
+	include(name)
+	project(":$name").projectDir = file("modules/$name")
 }
 
 include(":plugin")

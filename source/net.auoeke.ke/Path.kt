@@ -2,11 +2,15 @@
 
 package net.auoeke.ke
 
-import java.io.*
-import java.net.*
+import java.io.File
+import java.io.OutputStream
+import java.net.URI
+import java.net.URL
 import java.nio.file.*
-import java.nio.file.attribute.*
-import java.time.*
+import java.nio.file.attribute.BasicFileAttributes
+import java.nio.file.attribute.FileAttribute
+import java.nio.file.attribute.FileTime
+import java.time.Instant
 import kotlin.io.path.*
 
 inline val Path.exists: Boolean get() = Files.exists(this)
@@ -25,18 +29,18 @@ inline fun Path.copy(destination: OutputStream): Long = Files.copy(this, destina
 inline fun Path.list(glob: String): List<Path> = this.listDirectoryEntries(glob)
 
 inline fun Path.list(recurse: Boolean = false): List<Path> = when {
-    recurse -> ArrayList<Path>().apply {walk {this.add(it)}}
-    else -> Files.list(this).toList()
+	recurse -> ArrayList<Path>().apply {walk {this.add(it)}}
+	else -> Files.list(this).toList()
 }
 
 inline fun Path.listFiles(recurse: Boolean = false): List<Path> = when {
-    recurse -> ArrayList<Path>().apply {walkFiles(this::add)}
-    else -> Files.list(this).filter {!it.isDirectory()}.toList()
+	recurse -> ArrayList<Path>().apply {walkFiles(this::add)}
+	else -> Files.list(this).filter {!it.isDirectory()}.toList()
 }
 
 inline fun Path.delete(recurse: Boolean = false): Path = when {
-    recurse -> this.walk(TreeDeleter)
-    else -> this.apply {this.deleteExisting()}
+	recurse -> this.walk(TreeDeleter)
+	else -> this.apply {this.deleteExisting()}
 }
 
 inline fun Path.tryDelete(recurse: Boolean = false): Path = this.apply {

@@ -1,39 +1,39 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("maven-publish")
+	id("maven-publish")
 	id("org.jetbrains.kotlin.jvm").version("latest.release")
 	id("net.auoeke.gronk").version("3.+")
 }
 
 allprojects {
-    plugins.tap {
-	    apply("signing")
-        apply("maven-publish")
-        apply("org.jetbrains.kotlin.jvm")
-	    apply("net.auoeke.gronk")
-    }
+	plugins.tap {
+		apply("signing")
+		apply("maven-publish")
+		apply("org.jetbrains.kotlin.jvm")
+		apply("net.auoeke.gronk")
+	}
 
 	description = "Kotlin extensions"
 	javaVersion(17)
 	extensions.add("isModule", projectDir.relativePath(rootProject.rootDir).startsWith("modules"))
 
-    repositories {
-        mavenCentral()
-    }
+	repositories {
+		mavenCentral()
+	}
 
-    dependencies {
-        testImplementation("org.junit.jupiter:junit-jupiter-api")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    }
+	dependencies {
+		testImplementation("org.junit.jupiter:junit-jupiter-api")
+		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+	}
 
 	tasks.withType(KotlinCompile) {
 		kotlinOptions.jvmTarget = targetCompatibility
 	}
 
-    tasks.test {
-        useJUnitPlatform()
-    }
+	tasks.test {
+		useJUnitPlatform()
+	}
 
 	java {
 		withJavadocJar()
@@ -45,46 +45,46 @@ allprojects {
 		}
 	}
 
-    publishing {
-        repositories {
-            maven(findProperty("maven.repository")) {
-                username(findProperty("maven.username"))
-                password(findProperty("maven.password"))
-            }
-        }
+	publishing {
+		repositories {
+			maven(findProperty("maven.repository")) {
+				username(findProperty("maven.username"))
+				password(findProperty("maven.password"))
+			}
+		}
 
-	    publications.withType(MavenPublication) {
-		    pom {
-			    url = "https://github.com/auoeke/ke"
-			    
-			    licenses {
-				    license {
-					    url = "https://github.com/auoeke/ke/blob/master/LICENSE.md"
-				    }
-			    }
+		publications.withType(MavenPublication) {
+			pom {
+				url = "https://github.com/auoeke/ke"
 
-			    developers {
-				    developer {
-					    email = "me@auoeke.net"
-				    }
-			    }
+				licenses {
+					license {
+						url = "https://github.com/auoeke/ke/blob/master/LICENSE.md"
+					}
+				}
 
-			    scm {
-				    url = "https://github.com/auoeke/ke"
-			    }
-		    }
-	    }
-    }
+				developers {
+					developer {
+						email = "me@auoeke.net"
+					}
+				}
+
+				scm {
+					url = "https://github.com/auoeke/ke"
+				}
+			}
+		}
+	}
 }
 
 subprojects {
-    dependencies {
-        api(rootProject)
-    }
+	dependencies {
+		api(rootProject)
+	}
 }
 
 new Properties().tap {load(new FileInputStream("dependencies.properties"))}.each {key, value ->
-    project(key).dependencies {
-        compileOnly(value.split(" "))
-    }
+	project(key).dependencies {
+		compileOnly(value.split(" "))
+	}
 }

@@ -1,19 +1,19 @@
 plugins {
-    id("java-gradle-plugin")
+	id("java-gradle-plugin")
 }
 
 jar {
-    from("$rootProject.rootDir/dependencies.properties")
-    from("$rootProject.rootDir/gradle.properties")
+	from("$rootProject.rootDir/dependencies.properties")
+	from("$rootProject.rootDir/gradle.properties")
 }
 
 gradlePlugin {
-    plugins {
-        extensions {
-            id = group
-            displayName = rootProject.name
-            description = project.description
-            implementationClass = group + ".plugin.ExtensionsPlugin"
-        }
-    }
+	plugins {
+		extensions {
+			id = group
+			displayName = rootProject.name
+			description = project.description
+			implementationClass = group + ".plugin.ExtensionsPlugin"
+		}
+	}
 }

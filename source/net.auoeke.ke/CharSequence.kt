@@ -2,7 +2,7 @@
 
 package net.auoeke.ke
 
-import org.intellij.lang.annotations.*
+import org.intellij.lang.annotations.RegExp
 
 fun CharSequence.count(char: Char): Int = this.count {it == char}
 fun CharSequence.count(substring: String): Int = Regex.fromLiteral(substring).findAll(this).count()

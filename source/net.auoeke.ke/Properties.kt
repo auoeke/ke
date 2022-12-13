@@ -2,10 +2,10 @@
 
 package net.auoeke.ke
 
-import java.io.*
-import java.nio.file.*
+import java.io.InputStream
+import java.nio.file.Path
 import java.util.*
-import kotlin.io.path.*
+import kotlin.io.path.inputStream
 
 inline fun Properties(stream: InputStream): Properties = Properties().apply {this.load(stream)}
 inline fun Properties(path: Path): Properties = Properties(path.inputStream())

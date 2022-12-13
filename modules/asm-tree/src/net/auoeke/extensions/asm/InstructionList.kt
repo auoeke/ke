@@ -10,29 +10,29 @@ import java.util.function.Function
 
 @Suppress("unused")
 class InstructionList : InsnList, List<AbstractInsnNode> {
-    override val size: Int get() = super.size()
+	override val size: Int get() = super.size()
 
-    private val labelConstructor = Function<String, Label> {Label()}
-    private val labels = HashMap<String, Label>()
+	private val labelConstructor = Function<String, Label> {Label()}
+	private val labels = HashMap<String, Label>()
 
-    constructor(vararg instructions: AbstractInsnNode, initializer: InstructionList.() -> Unit = {}) {
-        add(*instructions)
-        initializer(this)
-    }
+	constructor(vararg instructions: AbstractInsnNode, initializer: InstructionList.() -> Unit = {}) {
+		add(*instructions)
+		initializer(this)
+	}
 
-    constructor(instructions: InsnList?, initializer: InstructionList.() -> Unit = {}) {
-        add(instructions)
-        initializer(this)
-    }
+	constructor(instructions: InsnList?, initializer: InstructionList.() -> Unit = {}) {
+		add(instructions)
+		initializer(this)
+	}
 
-    override fun isEmpty(): Boolean = size == 0
-    override fun lastIndexOf(element: AbstractInsnNode): Int = indexOf(element)
-    override fun listIterator(): ListIterator<AbstractInsnNode> = iterator()
-    override fun listIterator(index: Int): ListIterator<AbstractInsnNode> = iterator(index)
-    override fun subList(fromIndex: Int, toIndex: Int): InstructionList = throw UnsupportedOperationException()
-    override fun containsAll(elements: Collection<AbstractInsnNode>): Boolean = elements.all(::contains)
+	override fun isEmpty(): Boolean = size == 0
+	override fun lastIndexOf(element: AbstractInsnNode): Int = indexOf(element)
+	override fun listIterator(): ListIterator<AbstractInsnNode> = iterator()
+	override fun listIterator(index: Int): ListIterator<AbstractInsnNode> = iterator(index)
+	override fun subList(fromIndex: Int, toIndex: Int): InstructionList = throw UnsupportedOperationException()
+	override fun containsAll(elements: Collection<AbstractInsnNode>): Boolean = elements.all(::contains)
 
-    // @formatter:off
+	// @formatter:off
     fun <T : InsnList> T.frame(type: Int, numLocal: Int, local: Array<Any>?, numStack: Int, stack: Array<Any>?): T = append(FrameNode(
         type,
         numLocal,
@@ -42,72 +42,72 @@ class InstructionList : InsnList, List<AbstractInsnNode> {
     ))
     // @formatter:on
 
-    fun jump(opcode: Int, label: String) = append(JumpInsnNode(opcode, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun jump(opcode: Int, label: Label) = append(JumpInsnNode(opcode, labelNode(label)))
-    fun ifeq(label: String) = append(JumpInsnNode(Opcodes.IFEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifeq(label: Label) = append(JumpInsnNode(Opcodes.IFEQ, labelNode(label)))
-    fun ifne(label: String) = append(JumpInsnNode(Opcodes.IFNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifne(label: Label) = append(JumpInsnNode(Opcodes.IFNE, labelNode(label)))
-    fun iflt(label: String) = append(JumpInsnNode(Opcodes.IFLT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun iflt(label: Label) = append(JumpInsnNode(Opcodes.IFLT, labelNode(label)))
-    fun ifge(label: String) = append(JumpInsnNode(Opcodes.IFGE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifge(label: Label) = append(JumpInsnNode(Opcodes.IFGE, labelNode(label)))
-    fun ifgt(label: String) = append(JumpInsnNode(Opcodes.IFGT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifgt(label: Label) = append(JumpInsnNode(Opcodes.IFGT, labelNode(label)))
-    fun ifle(label: String) = append(JumpInsnNode(Opcodes.IFLE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifle(label: Label) = append(JumpInsnNode(Opcodes.IFLE, labelNode(label)))
-    fun if_icmpeq(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmpeq(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPEQ, labelNode(label)))
-    fun if_icmpne(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmpne(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPNE, labelNode(label)))
-    fun if_icmplt(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPLT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmplt(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPLT, labelNode(label)))
-    fun if_icmpge(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPGE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmpge(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPGE, labelNode(label)))
-    fun if_icmpgt(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPGT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmpgt(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPGT, labelNode(label)))
-    fun if_icmple(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPLE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_icmple(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPLE, labelNode(label)))
-    fun if_acmpeq(label: String) = append(JumpInsnNode(Opcodes.IF_ACMPEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_acmpeq(label: Label) = append(JumpInsnNode(Opcodes.IF_ACMPEQ, labelNode(label)))
-    fun if_acmpne(label: String) = append(JumpInsnNode(Opcodes.IF_ACMPNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun if_acmpne(label: Label) = append(JumpInsnNode(Opcodes.IF_ACMPNE, labelNode(label)))
-    fun goto(label: String) = append(JumpInsnNode(Opcodes.GOTO, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun goto(label: Label) = append(JumpInsnNode(Opcodes.GOTO, labelNode(label)))
-    fun jsr(label: String) = append(JumpInsnNode(Opcodes.JSR, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun jsr(label: Label) = append(JumpInsnNode(Opcodes.JSR, labelNode(label)))
-    fun ifnull(label: String) = append(JumpInsnNode(Opcodes.IFNULL, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifnull(label: Label) = append(JumpInsnNode(Opcodes.IFNULL, labelNode(label)))
-    fun ifnonnull(label: String) = append(JumpInsnNode(Opcodes.IFNONNULL, labelNode(labels.computeIfAbsent(label, labelConstructor))))
-    fun ifnonnull(label: Label) = append(JumpInsnNode(Opcodes.IFNONNULL, labelNode(label)))
-    fun label(label: String) = append(labelNode(labels.computeIfAbsent(label, labelConstructor)))
-    fun label(label: Label) = append(labelNode(label))
-    fun tableswitch(min: Int, max: Int, dflt: Label, vararg labels: Label) = append(TableSwitchInsnNode(min, max, labelNode(dflt), *labelNodes(labels)))
-    fun lookupswitch(dflt: Label, keys: IntArray?, labels: Array<Label>) = append(LookupSwitchInsnNode(labelNode(dflt), keys, labelNodes(labels)))
+	fun jump(opcode: Int, label: String) = append(JumpInsnNode(opcode, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun jump(opcode: Int, label: Label) = append(JumpInsnNode(opcode, labelNode(label)))
+	fun ifeq(label: String) = append(JumpInsnNode(Opcodes.IFEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifeq(label: Label) = append(JumpInsnNode(Opcodes.IFEQ, labelNode(label)))
+	fun ifne(label: String) = append(JumpInsnNode(Opcodes.IFNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifne(label: Label) = append(JumpInsnNode(Opcodes.IFNE, labelNode(label)))
+	fun iflt(label: String) = append(JumpInsnNode(Opcodes.IFLT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun iflt(label: Label) = append(JumpInsnNode(Opcodes.IFLT, labelNode(label)))
+	fun ifge(label: String) = append(JumpInsnNode(Opcodes.IFGE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifge(label: Label) = append(JumpInsnNode(Opcodes.IFGE, labelNode(label)))
+	fun ifgt(label: String) = append(JumpInsnNode(Opcodes.IFGT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifgt(label: Label) = append(JumpInsnNode(Opcodes.IFGT, labelNode(label)))
+	fun ifle(label: String) = append(JumpInsnNode(Opcodes.IFLE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifle(label: Label) = append(JumpInsnNode(Opcodes.IFLE, labelNode(label)))
+	fun if_icmpeq(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmpeq(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPEQ, labelNode(label)))
+	fun if_icmpne(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmpne(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPNE, labelNode(label)))
+	fun if_icmplt(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPLT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmplt(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPLT, labelNode(label)))
+	fun if_icmpge(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPGE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmpge(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPGE, labelNode(label)))
+	fun if_icmpgt(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPGT, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmpgt(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPGT, labelNode(label)))
+	fun if_icmple(label: String) = append(JumpInsnNode(Opcodes.IF_ICMPLE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_icmple(label: Label) = append(JumpInsnNode(Opcodes.IF_ICMPLE, labelNode(label)))
+	fun if_acmpeq(label: String) = append(JumpInsnNode(Opcodes.IF_ACMPEQ, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_acmpeq(label: Label) = append(JumpInsnNode(Opcodes.IF_ACMPEQ, labelNode(label)))
+	fun if_acmpne(label: String) = append(JumpInsnNode(Opcodes.IF_ACMPNE, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun if_acmpne(label: Label) = append(JumpInsnNode(Opcodes.IF_ACMPNE, labelNode(label)))
+	fun goto(label: String) = append(JumpInsnNode(Opcodes.GOTO, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun goto(label: Label) = append(JumpInsnNode(Opcodes.GOTO, labelNode(label)))
+	fun jsr(label: String) = append(JumpInsnNode(Opcodes.JSR, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun jsr(label: Label) = append(JumpInsnNode(Opcodes.JSR, labelNode(label)))
+	fun ifnull(label: String) = append(JumpInsnNode(Opcodes.IFNULL, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifnull(label: Label) = append(JumpInsnNode(Opcodes.IFNULL, labelNode(label)))
+	fun ifnonnull(label: String) = append(JumpInsnNode(Opcodes.IFNONNULL, labelNode(labels.computeIfAbsent(label, labelConstructor))))
+	fun ifnonnull(label: Label) = append(JumpInsnNode(Opcodes.IFNONNULL, labelNode(label)))
+	fun label(label: String) = append(labelNode(labels.computeIfAbsent(label, labelConstructor)))
+	fun label(label: Label) = append(labelNode(label))
+	fun tableswitch(min: Int, max: Int, dflt: Label, vararg labels: Label) = append(TableSwitchInsnNode(min, max, labelNode(dflt), *labelNodes(labels)))
+	fun lookupswitch(dflt: Label, keys: IntArray?, labels: Array<Label>) = append(LookupSwitchInsnNode(labelNode(dflt), keys, labelNodes(labels)))
 
-    private companion object {
-        private fun labelNode(label: Label): LabelNode = when (label.info) {
-            null -> LabelNode().also {label.info = it}
-            else -> label.info
-        } as LabelNode
+	private companion object {
+		private fun labelNode(label: Label): LabelNode = when (label.info) {
+			null -> LabelNode().also {label.info = it}
+			else -> label.info
+		} as LabelNode
 
-        private fun labelNodes(objects: Array<*>): Array<*> = objects.map {
-            when (it) {
-                is Label -> labelNode(it)
-                else -> it
-            }
-        }.toTypedArray()
+		private fun labelNodes(objects: Array<*>): Array<*> = objects.map {
+			when (it) {
+				is Label -> labelNode(it)
+				else -> it
+			}
+		}.toTypedArray()
 
-        private fun labelNodes(labels: Array<out Label>): Array<LabelNode> = labels.map(Companion::labelNode).toTypedArray()
-    }
+		private fun labelNodes(labels: Array<out Label>): Array<LabelNode> = labels.map(Companion::labelNode).toTypedArray()
+	}
 }
 
 inline fun <T : InsnList> T.append(instruction: AbstractInsnNode): T = apply {
-    add(instruction)
+	add(instruction)
 }
 
 inline fun <T : InsnList> T.add(vararg instructions: AbstractInsnNode): T = apply {
-    instructions.forEach(::add)
+	instructions.forEach(::add)
 }
 
 /** @see InsnNode */
@@ -263,7 +263,7 @@ inline fun <T : InsnList> T.invokeinterface(owner: String, name: String, descrip
 
 /** @see InvokeDynamicInsnNode */
 inline fun <T : InsnList> T.invokedynamic(name: String, descriptor: String, bootstrapMethodHandle: Handle, vararg bootstrapMethodArguments: Any): T {
-    return append(InvokeDynamicInsnNode(name, descriptor, bootstrapMethodHandle, *bootstrapMethodArguments))
+	return append(InvokeDynamicInsnNode(name, descriptor, bootstrapMethodHandle, *bootstrapMethodArguments))
 }
 
 /** @see JumpInsnNode */
