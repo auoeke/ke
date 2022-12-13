@@ -1,6 +1,6 @@
-package net.auoeke.extensions.asm
+package net.auoeke.ke.asm
 
-import net.auoeke.extensions.*
+import net.auoeke.ke.*
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.*
 import java.io.*

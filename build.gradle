@@ -41,7 +41,7 @@ allprojects {
 
 	if (isModule) {
 		tasks.withType(Jar) {
-			archiveBaseName.set("extensions-${project.name}")
+			archiveBaseName.set("ke-$project.name")
 		}
 	}
 

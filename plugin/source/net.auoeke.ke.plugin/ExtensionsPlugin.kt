@@ -24,7 +24,7 @@ class ExtensionsPlugin : Plugin<Project> {
 	}
 
 	private fun Project.afterEvaluation() {
-		this.add("extensions")
+		this.add("ke")
 
 		modules.each {key, value ->
 			val dependencies = value.split(" ").toHashSet()

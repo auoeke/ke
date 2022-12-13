@@ -9,7 +9,7 @@ jar {
 
 gradlePlugin {
 	plugins {
-		extensions {
+		ke {
 			id = group
 			displayName = rootProject.name
 			description = project.description

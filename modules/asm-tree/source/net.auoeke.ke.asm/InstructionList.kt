@@ -1,6 +1,6 @@
 @file:Suppress("unused", "FunctionName", "NOTHING_TO_INLINE")
 
-package net.auoeke.extensions.asm
+package net.auoeke.ke.asm
 
 import org.objectweb.asm.Handle
 import org.objectweb.asm.Label
