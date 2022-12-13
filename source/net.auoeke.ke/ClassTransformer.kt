@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.lang.instrument.ClassFileTransformer
 import java.security.ProtectionDomain

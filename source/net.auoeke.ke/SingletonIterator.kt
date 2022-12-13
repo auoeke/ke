@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 class SingletonIterator<T>(private val element: T) : Iterator<T> {
     private var done: Boolean = false

@@ -1,6 +1,6 @@
 
-import net.auoeke.extensions.source
-import net.auoeke.extensions.type
+import net.auoeke.ke.source
+import net.auoeke.ke.type
 import org.junit.jupiter.api.Test
 import org.junit.platform.commons.annotation.Testable
 

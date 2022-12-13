@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.io.IOException
 import java.nio.file.FileVisitResult

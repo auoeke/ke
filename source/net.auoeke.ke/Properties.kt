@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused", "UNCHECKED_CAST")
 
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.io.*
 import java.nio.file.*

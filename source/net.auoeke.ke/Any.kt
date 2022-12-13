@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE", "PLATFORM_CLASS_MAPPED_TO_KOTLIN", "unused")
 
-package net.auoeke.extensions
+package net.auoeke.ke
 
 inline val Any.string: String get() = this.toString()
 inline val Any?.string: String @JvmName("nullableString") get() = this.toString()

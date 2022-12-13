@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.io.*
 import java.net.*

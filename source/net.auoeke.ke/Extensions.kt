@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused", "UNCHECKED_CAST", "PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.io.*
 import java.nio.file.*

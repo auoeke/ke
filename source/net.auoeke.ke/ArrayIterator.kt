@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 class ArrayIterator<T>(private val array: Array<T>, private var index: Int = 0) : MutableListIterator<T> {
     private val size: Int = this.array.size

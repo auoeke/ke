@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 class StringIterator(private val sequence: CharSequence, var index: Int = 0) : ListIterator<Char> {
     private val length: Int = this.sequence.length

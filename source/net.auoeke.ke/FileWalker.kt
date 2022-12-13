@@ -1,4 +1,4 @@
-package net.auoeke.extensions
+package net.auoeke.ke
 
 import java.nio.file.*
 import java.nio.file.attribute.*
