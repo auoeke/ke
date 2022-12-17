@@ -16,7 +16,7 @@ allprojects {
 
 	description = "Kotlin extensions"
 	javaVersion(17)
-	extensions.add("isModule", projectDir.relativePath(rootProject.rootDir).startsWith("modules"))
+	ext.isModule = rootDir.relativePath(projectDir).startsWith("modules/")
 
 	repositories {
 		mavenCentral()
